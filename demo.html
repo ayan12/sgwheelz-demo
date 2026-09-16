@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SGWheelz — Live Demo</title>
+<title>AutoLedger — Live Demo</title>
 <style>
 :root{color-scheme:light;--navy:#10294a;--navy2:#0a1c33;--orange:#ef7d24;--orange2:#d96a15;
 --ink:#1e293b;--muted:#64748b;--line:#e6ebf2;--bg:#f6f8fc;--card:#fff;--green:#16a34a;--greenbg:#dcfce7;--blue:#2563eb;--bluebg:#dbeafe}
@@ -84,9 +84,9 @@ tbody tr:hover{background:#f8fafc}
 <!-- LOGIN -->
 <div id="login">
   <div class="card">
-    <div class="lg"><span class="logo"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11l1.6.6A1.5 1.5 0 0 1 21.6 13v3.5a1 1 0 0 1-1 1H19a2 2 0 0 1-4 0H9a2 2 0 0 1-4 0H3.4a1 1 0 0 1-1-1V13a1.5 1.5 0 0 1 1-1.4L5 11zm2.2-.5h9.6l-1-3a.5.5 0 0 0-.48-.35H8.68a.5.5 0 0 0-.48.35l-1 3z"/></svg></span>SGWheelz</div>
+    <div class="lg"><span class="logo"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11l1.6.6A1.5 1.5 0 0 1 21.6 13v3.5a1 1 0 0 1-1 1H19a2 2 0 0 1-4 0H9a2 2 0 0 1-4 0H3.4a1 1 0 0 1-1-1V13a1.5 1.5 0 0 1 1-1.4L5 11zm2.2-.5h9.6l-1-3a.5.5 0 0 0-.48-.35H8.68a.5.5 0 0 0-.48.35l-1 3z"/></svg></span>AutoLedger</div>
     <div class="sub">Car Trading Management System</div>
-    <label>Email</label><input id="email" value="demo@sgwheelz.example"/>
+    <label>Email</label><input id="email" value="demo@autoledger.example"/>
     <label>Password</label><input id="pass" type="password" value="demo1234"/>
     <button class="btn" onclick="signIn()">Sign in</button>
     <div class="hint">This is a live demo — just click <b>Sign in</b>.</div>
@@ -97,7 +97,7 @@ tbody tr:hover{background:#f8fafc}
 <div id="app">
   <div class="shell">
     <aside class="side">
-      <div class="lg"><span class="logo"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11l1.6.6A1.5 1.5 0 0 1 21.6 13v3.5a1 1 0 0 1-1 1H19a2 2 0 0 1-4 0H9a2 2 0 0 1-4 0H3.4a1 1 0 0 1-1-1V13a1.5 1.5 0 0 1 1-1.4L5 11z"/></svg></span>SGWheelz</div>
+      <div class="lg"><span class="logo"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11l1.6.6A1.5 1.5 0 0 1 21.6 13v3.5a1 1 0 0 1-1 1H19a2 2 0 0 1-4 0H9a2 2 0 0 1-4 0H3.4a1 1 0 0 1-1-1V13a1.5 1.5 0 0 1 1-1.4L5 11z"/></svg></span>AutoLedger</div>
       <nav class="nav">
         <a data-v="dashboard" class="active" onclick="nav('dashboard')"><svg viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z"/></svg>Dashboard</a>
         <a data-v="transactions" onclick="nav('transactions')"><svg viewBox="0 0 24 24"><path d="M4 5h16v3H4zM4 10h16v3H4zM4 15h10v3H4z"/></svg>Transactions</a>
