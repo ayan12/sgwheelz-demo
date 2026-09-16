@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SGWheelz — Car Trading Management System</title>
+<style>
+  :root{
+    color-scheme: light;
+    --navy:#10294a; --navy2:#0a1c33; --orange:#ef7d24; --orange2:#d96a15;
+    --ink:#1e293b; --muted:#64748b; --line:#e6ebf2; --bg:#f6f8fc; --card:#ffffff;
+    --green:#16a34a; --greenbg:#dcfce7;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+  a{color:inherit}
+  /* Hero */
+  .hero{background:radial-gradient(1200px 500px at 80% -10%,#1c477d 0,var(--navy) 45%,var(--navy2) 100%);color:#fff;padding:26px 0 64px}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:6px 0 30px}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.2px;font-size:20px}
+  .logo{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--orange),var(--orange2));display:grid;place-items:center;box-shadow:0 6px 18px rgba(239,125,36,.35)}
+  .logo svg{width:24px;height:24px;fill:#fff}
+  .nav .tag{font-size:12.5px;color:#c7d6ea;font-weight:600;border:1px solid rgba(255,255,255,.18);padding:6px 12px;border-radius:999px}
+  .hero h1{font-size:44px;line-height:1.08;margin:14px 0 12px;font-weight:850;letter-spacing:-.5px}
+  .hero h1 .accent{color:#ffb877}
+  .lede{font-size:18.5px;color:#d7e2f1;max-width:680px;margin:0 0 24px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .chip{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:#eaf2fb;padding:8px 14px;border-radius:999px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:8px}
+  .chip svg{width:15px;height:15px;fill:#7fe0a3}
+  /* Sections */
+  section{padding:56px 0}
+  .kicker{color:var(--orange);font-weight:800;font-size:12.5px;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:10px}
+  h2{font-size:29px;margin:0 0 14px;font-weight:820;letter-spacing:-.3px}
+  .intro p{font-size:18px;color:#42506a;max-width:820px;margin:0}
+  /* Feature grid */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+  .fcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 1px 2px rgba(16,41,74,.04)}
+  .ficon{width:42px;height:42px;border-radius:11px;background:#fef0e3;display:grid;place-items:center;margin-bottom:14px}
+  .ficon svg{width:22px;height:22px;fill:var(--orange2)}
+  .fcard h3{margin:0 0 6px;font-size:16.5px;font-weight:750}
+  .fcard p{margin:0;color:var(--muted);font-size:14.3px}
+  /* Preview mock */
+  .preview{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .browser{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 24px 60px rgba(16,41,74,.14);margin-top:26px}
+  .bbar{background:#f1f5fa;border-bottom:1px solid var(--line);padding:11px 14px;display:flex;align-items:center;gap:8px}
+  .dot{width:11px;height:11px;border-radius:50%}
+  .url{margin-left:12px;font-size:12.5px;color:#7c8aa1;background:#fff;border:1px solid var(--line);border-radius:7px;padding:4px 12px}
+  .app{display:grid;grid-template-columns:180px 1fr;min-height:330px}
+  .side{background:var(--navy);color:#cdd9e9;padding:16px 12px;font-size:13px}
+  .side .sbrand{display:flex;align-items:center;gap:9px;color:#fff;font-weight:800;margin-bottom:16px}
+  .side .sbrand .logo{width:30px;height:30px;border-radius:8px}
+  .side .sbrand .logo svg{width:18px;height:18px}
+  .side .item{padding:8px 10px;border-radius:8px;margin-bottom:2px;color:#b9c8dd}
+  .side .item.active{background:#fff;color:var(--navy);font-weight:700}
+  .main{padding:18px 20px}
+  .main h4{margin:0 0 2px;font-size:17px}
+  .main .sub{color:var(--muted);font-size:12.5px;margin-bottom:14px}
+  table{width:100%;border-collapse:collapse;font-size:12.7px;white-space:nowrap}
+  th{text-align:left;color:#93a1b5;text-transform:uppercase;font-size:10.5px;letter-spacing:.4px;padding:8px 10px;border-bottom:1px solid var(--line);background:#f8fafc}
+  td{padding:9px 10px;border-bottom:1px solid #f1f4f8}
+  .rec{color:var(--orange2);font-weight:700}
+  .pill{background:var(--greenbg);color:#15803d;font-weight:700;font-size:10.5px;padding:3px 9px;border-radius:999px}
+  .paid{color:var(--green);font-weight:700}
+  .paid svg{width:12px;height:12px;fill:var(--green);vertical-align:-1px;margin-right:2px}
+  /* Benefits */
+  .bene{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:26px}
+  .brow{display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .bcheck{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--greenbg);display:grid;place-items:center;margin-top:1px}
+  .bcheck svg{width:14px;height:14px;fill:var(--green)}
+  .brow b{display:block;font-size:15px;margin-bottom:2px}
+  .brow span{color:var(--muted);font-size:13.6px}
+  /* Reliability band */
+  .band{background:var(--navy);color:#e7eefa}
+  .band h2{color:#fff}
+  .band .kicker{color:#ffb877}
+  .rgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:26px}
+  .rcard{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px}
+  .rcard .rico{width:38px;height:38px;border-radius:10px;background:rgba(239,125,36,.18);display:grid;place-items:center;margin-bottom:12px}
+  .rcard .rico svg{width:20px;height:20px;fill:#ffb877}
+  .rcard b{font-size:15px}
+  .rcard p{color:#b9c8dd;font-size:13.3px;margin:5px 0 0}
+  /* CTA */
+  .cta{text-align:center}
+  .cta .box{background:linear-gradient(135deg,#fff,#fff);border:1px solid var(--line);border-radius:20px;padding:40px 26px;box-shadow:0 20px 50px rgba(16,41,74,.08);max-width:720px;margin:24px auto 0}
+  .cta h2{font-size:26px}
+  .cta p{color:var(--muted);font-size:16px;max-width:520px;margin:8px auto 22px}
+  .btn{display:inline-block;background:linear-gradient(135deg,var(--orange),var(--orange2));color:#fff;font-weight:800;font-size:15.5px;padding:14px 30px;border-radius:12px;text-decoration:none;box-shadow:0 10px 24px rgba(239,125,36,.35)}
+  .contact{margin-top:18px;color:var(--muted);font-size:14px}
+  .contact b{color:var(--ink)}
+  footer{text-align:center;color:var(--muted);font-size:13px;padding:34px 0 46px}
+  footer .brand{justify-content:center;color:var(--navy);margin-bottom:8px}
+  @media(max-width:860px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .rgrid{grid-template-columns:repeat(2,1fr)}
+    .bene{grid-template-columns:1fr}
+    .app{grid-template-columns:1fr}
+    .side{display:none}
+    .hero h1{font-size:34px}
+  }
+  @media(max-width:540px){
+    .grid{grid-template-columns:1fr}
+    .rgrid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="nav">
+      <div class="brand">
+        <span class="logo"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11l1.6.6A1.5 1.5 0 0 1 21.6 13v3.5a1 1 0 0 1-1 1H19a2 2 0 0 1-4 0H9a2 2 0 0 1-4 0H3.4a1 1 0 0 1-1-1V13a1.5 1.5 0 0 1 1-1.4L5 11zm2.2-.5h9.6l-1-3a.5.5 0 0 0-.48-.35H8.68a.5.5 0 0 0-.48.35l-1 3zM7 14a1.25 1.25 0 1 0 0 2.5A1.25 1.25 0 0 0 7 14zm10 0a1.25 1.25 0 1 0 0 2.5A1.25 1.25 0 0 0 17 14z"/></svg></span>
+        SGWheelz
+      </div>
+      <div class="tag">Car Trading Management System</div>
+    </div>
+
+    <h1>Run your entire used-car business<br><span class="accent">from one simple screen.</span></h1>
+    <p class="lede">SGWheelz is a complete web-based system for buying, selling and exporting used cars — tracking every deal, calculating profit and commission automatically, and generating professional invoices. Built to replace messy spreadsheets, usable by your whole team from any device.</p>
+    <div class="chips">
+      <span class="chip"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Works on any phone or computer</span>
+      <span class="chip"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Secure &amp; encrypted</span>
+      <span class="chip"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Automatic daily backups</span>
+    </div>
+  </div>
+</div>
+
+<section class="intro">
+  <div class="wrap">
+    <div class="kicker">What it is</div>
+    <h2>A proper system, not another spreadsheet</h2>
+    <p>Every car you buy and sell is logged once — the dealer, the buyer, the prices, tow fees and status. The system instantly works out your balance and commission, produces branded PDF invoices, keeps a contact book of dealers and buyers, and turns it all into clear monthly reports. One source of truth your whole team can trust.</p>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="kicker">Everything included</div>
+    <h2>What the system does</h2>
+    <div class="grid">
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24"><path d="M4 5h16v3H4zM4 10h16v3H4zM4 15h10v3H4z"/></svg></div><h3>Deal tracking</h3><p>Log each car once. Balance and commission calculate automatically as you type.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM8 12h8v1.6H8zm0 3h8v1.6H8z"/></svg></div><h3>Professional invoices</h3><p>One-click PDF purchase &amp; sale invoices, branded and ready to send to dealers and buyers.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0 2c-3.3 0-8 1.7-8 5v1h16v-1c0-3.3-4.7-5-8-5z"/></svg></div><h3>Dealers &amp; buyers</h3><p>A built-in contact book, with totals showing how much each buyer represents.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24"><path d="M4 20V10h4v10zm6 0V4h4v16zm6 0v-7h4v7z"/></svg></div><h3>Reports &amp; Excel</h3><p>Monthly summaries and totals by buyer, with one-click Excel and CSV export.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24"><path d="M12 3v10.2l3.6-3.6L17 11l-5 5-5-5 1.4-1.4L12 13.2V3zM5 19h14v2H5z"/></svg></div><h3>One-step Excel import</h3><p>Bring your existing records straight in, with a safe preview before anything is saved.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></div><h3>Commission tracking</h3><p>Mark commissions paid or unpaid and see, at a glance, exactly what you're still owed.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V5zm0 10.9h7c-.5 3.8-3 7.4-7 8.6z"/></svg></div><h3>Roles &amp; permissions</h3><p>Owner and staff logins. Staff enter daily data but can't delete records or change settings.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24"><path d="M12 8V4l8 8-8 8v-4H4V8z"/></svg></div><h3>Activity log &amp; bulk tools</h3><p>See who changed what and when — and edit, update or clear many records at once.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="preview">
+  <div class="wrap">
+    <div class="kicker">A look inside</div>
+    <h2>Clean, simple, and built for daily use</h2>
+    <div class="browser">
+      <div class="bbar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="url">app.sgwheelz.example / transactions</span></div>
+      <div class="app">
+        <div class="side">
+          <div class="sbrand"><span class="logo"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11l1.6.6A1.5 1.5 0 0 1 21.6 13v3.5a1 1 0 0 1-1 1H19a2 2 0 0 1-4 0H9a2 2 0 0 1-4 0H3.4a1 1 0 0 1-1-1V13a1.5 1.5 0 0 1 1-1.4L5 11zm2.2-.5h9.6l-1-3a.5.5 0 0 0-.48-.35H8.68a.5.5 0 0 0-.48.35l-1 3z"/></svg></span>SGWheelz</div>
+          <div class="item">Dashboard</div>
+          <div class="item active">Transactions</div>
+          <div class="item">Dealers</div>
+          <div class="item">Buyers</div>
+          <div class="item">Reports</div>
+          <div class="item">Import Excel</div>
+          <div class="item">Settings</div>
+        </div>
+        <div class="main">
+          <h4>Transactions</h4>
+          <div class="sub">Balance &amp; commission calculated automatically · green = commission paid</div>
+          <table>
+            <thead><tr><th>Rec No.</th><th>Car</th><th>Buyer</th><th>Sale</th><th>Buy</th><th>Balance</th><th>Comm.</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td class="rec">26089</td><td>Toyota Vios</td><td>Buyer A</td><td>$8,800</td><td>$8,000</td><td>$800</td><td class="paid"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>$400</td><td><span class="pill">Completed</span></td></tr>
+              <tr><td class="rec">26086</td><td>Mercedes E200</td><td>Buyer B</td><td>$23,000</td><td>$21,000</td><td>$2,000</td><td class="paid"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>$1,400</td><td><span class="pill">Completed</span></td></tr>
+              <tr><td class="rec">26085</td><td>Toyota Wish</td><td>Buyer C</td><td>$11,500</td><td>$9,000</td><td>$2,500</td><td>$1,900</td><td><span class="pill">Completed</span></td></tr>
+              <tr><td class="rec">26084</td><td>VW Golf</td><td>Buyer D</td><td>$14,000</td><td>$10,000</td><td>$4,000</td><td>$3,400</td><td><span class="pill">Completed</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;color:var(--muted);font-size:13px;margin-top:14px">Illustrative preview with sample data.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">Why owners love it</div>
+    <h2>Less admin. Fewer mistakes. More control.</h2>
+    <div class="bene">
+      <div class="brow"><span class="bcheck"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><div><b>No more spreadsheet chaos</b><span>One reliable system instead of scattered files and manual sums.</span></div></div>
+      <div class="brow"><span class="bcheck"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><div><b>Work from anywhere</b><span>Open it on a phone, tablet or computer — office or on the road.</span></div></div>
+      <div class="brow"><span class="bcheck"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><div><b>Look professional instantly</b><span>Branded PDF invoices for every purchase and sale in one click.</span></div></div>
+      <div class="brow"><span class="bcheck"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><div><b>Never lose track of money owed</b><span>Instantly see which commissions are still unpaid.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="kicker">Built right</div>
+    <h2>Reliable, secure, and yours to own</h2>
+    <div class="rgrid">
+      <div class="rcard"><div class="rico"><svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V5z"/></svg></div><b>Secure</b><p>Encrypted (HTTPS), role-based access, brute-force login protection, private codebase.</p></div>
+      <div class="rcard"><div class="rico"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9h-2a7 7 0 1 1-7-7zm1 4h-2v6l5 3 1-1.7-4-2.3z"/></svg></div><b>Always on</b><p>Hosted online and running 24/7 — nothing to install or maintain locally.</p></div>
+      <div class="rcard"><div class="rico"><svg viewBox="0 0 24 24"><path d="M12 3v10.2l3.6-3.6L17 11l-5 5-5-5 1.4-1.4L12 13.2V3zM5 19h14v2H5z"/></svg></div><b>Backed up</b><p>Automatic daily backups, plus one-click Excel export as your own safety copy.</p></div>
+      <div class="rcard"><div class="rico"><svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5zM2 12l10 5 10-5M2 17l10 5 10-5"/></svg></div><b>Full ownership</b><p>Complete source code included — it can be customised, rebranded and transferred.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <div class="box">
+      <div class="kicker" style="text-align:center">Ready when you are</div>
+      <h2>See it live</h2>
+      <p>Get a full walkthrough of the system with your own eyes, and see how it fits your business.</p>
+      <a class="btn" href="demo.html">Try the live demo</a>
+      <div class="contact">Contact: <b>[ your name &amp; phone / email here ]</b></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand"><span class="logo"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11l1.6.6A1.5 1.5 0 0 1 21.6 13v3.5a1 1 0 0 1-1 1H19a2 2 0 0 1-4 0H9a2 2 0 0 1-4 0H3.4a1 1 0 0 1-1-1V13a1.5 1.5 0 0 1 1-1.4L5 11z"/></svg></span>SGWheelz</div>
+    A complete car-trading management system for used-car dealers and exporters.<br>
+    Full ownership and source code transferable to the buyer.
+  </div>
+</footer>
+
+</body>
+</html>

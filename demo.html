@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SGWheelz — Live Demo</title>
+<style>
+:root{color-scheme:light;--navy:#10294a;--navy2:#0a1c33;--orange:#ef7d24;--orange2:#d96a15;
+--ink:#1e293b;--muted:#64748b;--line:#e6ebf2;--bg:#f6f8fc;--card:#fff;--green:#16a34a;--greenbg:#dcfce7;--blue:#2563eb;--bluebg:#dbeafe}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}
+.demobar{background:var(--orange);color:#fff;text-align:center;font-size:12.5px;font-weight:700;padding:6px}
+/* Login */
+#login{min-height:100%;display:grid;place-items:center;background:radial-gradient(1000px 500px at 70% -10%,#1c477d,var(--navy) 55%,var(--navy2))}
+.card{background:#fff;border-radius:18px;padding:34px 30px;width:340px;box-shadow:0 30px 70px rgba(0,0,0,.35)}
+.lg{display:flex;align-items:center;gap:11px;font-weight:800;font-size:20px;color:var(--navy);justify-content:center;margin-bottom:4px}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--orange),var(--orange2));display:grid;place-items:center}
+.logo svg{width:22px;height:22px;fill:#fff}
+.sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:20px}
+label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin:12px 0 5px}
+input,select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;font-size:14px;outline:none}
+input:focus,select:focus{border-color:var(--orange)}
+.btn{background:linear-gradient(135deg,var(--orange),var(--orange2));color:#fff;border:0;border-radius:10px;padding:11px;width:100%;font-weight:800;font-size:14.5px;margin-top:18px}
+.hint{text-align:center;font-size:12px;color:var(--muted);margin-top:14px}
+/* App */
+#app{display:none;min-height:100%}
+.shell{display:grid;grid-template-columns:210px 1fr;min-height:calc(100vh - 27px)}
+.side{background:var(--navy);color:#c7d5e8;padding:16px 12px;display:flex;flex-direction:column}
+.side .lg{color:#fff;font-size:17px;justify-content:flex-start;margin:4px 4px 18px}
+.side .lg .logo{width:30px;height:30px}.side .lg .logo svg{width:17px;height:17px}
+.nav a{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:9px;color:#b7c6db;text-decoration:none;font-size:13.5px;font-weight:600;margin-bottom:2px}
+.nav a.active{background:#fff;color:var(--navy)}
+.nav a:hover:not(.active){background:rgba(255,255,255,.08)}
+.nav svg{width:17px;height:17px;fill:currentColor;opacity:.9}
+.who{margin-top:auto;border-top:1px solid rgba(255,255,255,.12);padding-top:12px;font-size:12.5px;color:#9fb2cc}
+.who b{color:#fff;display:block}
+.logout{background:none;border:0;color:#9fb2cc;font-size:12.5px;padding:8px 0 0;text-align:left}
+.main{padding:22px 26px;overflow:auto}
+.top{display:flex;align-items:center;justify-content:between;gap:12px;margin-bottom:16px}
+h1{font-size:22px;margin:0}
+.pagesub{color:var(--muted);font-size:13px;margin:2px 0 0}
+.spacer{flex:1}
+.b2{background:#fff;border:1px solid var(--line);color:var(--ink);border-radius:9px;padding:8px 14px;font-weight:700;font-size:13px;width:auto}
+.bprimary{background:var(--navy);color:#fff;border:0;border-radius:9px;padding:8px 15px;font-weight:700;font-size:13px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+.kpi .l{color:var(--muted);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.kpi .v{font-size:23px;font-weight:820;margin-top:5px}
+.kpi .v.green{color:var(--green)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.panel .ph{padding:13px 16px;border-bottom:1px solid var(--line);font-weight:750;font-size:14.5px;display:flex;align-items:center;gap:10px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.toolbar input,.toolbar select{width:auto}
+.search{min-width:230px}
+table{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}
+th{text-align:left;color:#93a1b5;text-transform:uppercase;font-size:10.5px;letter-spacing:.4px;padding:10px 12px;border-bottom:1px solid var(--line);background:#f8fafc}
+td{padding:10px 12px;border-bottom:1px solid #f1f4f8}
+tbody tr:hover{background:#f8fafc}
+.rec{color:var(--orange2);font-weight:700}
+.money{font-variant-numeric:tabular-nums}
+.pill{font-weight:700;font-size:10.5px;padding:3px 9px;border-radius:999px}
+.pill.done{background:var(--greenbg);color:#15803d}.pill.prog{background:var(--bluebg);color:#1d4ed8}
+.comm{cursor:pointer;font-weight:700}
+.comm.paid{color:var(--green)}
+.comm .ck{width:13px;height:13px;fill:var(--green);vertical-align:-2px;margin-right:2px}
+.selbar{background:#eef4ff;border:1px solid #cfe0ff;border-radius:10px;padding:9px 13px;display:none;align-items:center;gap:10px;margin-bottom:12px;font-size:13px}
+.selbar b{color:var(--navy)}
+.mini{background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 11px;font-size:12.5px;font-weight:700}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(10,20,35,.5);display:none;place-items:center;padding:20px;z-index:50}
+.modal .m{background:#fff;border-radius:16px;width:min(560px,100%);max-height:90vh;overflow:auto;padding:22px 24px}
+.modal h3{margin:0 0 14px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mfoot{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+.readout{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:12px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between}
+.readout b{color:var(--ink)}
+@media(max-width:820px){.shell{grid-template-columns:1fr}.side{flex-direction:row;flex-wrap:wrap;align-items:center}.side .lg{margin-bottom:0}.nav{display:flex;flex-wrap:wrap}.who{display:none}.kpis{grid-template-columns:repeat(2,1fr)}.frow{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="demobar">DEMO — sample data only, resets when you refresh. No real business data.</div>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="card">
+    <div class="lg"><span class="logo"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11l1.6.6A1.5 1.5 0 0 1 21.6 13v3.5a1 1 0 0 1-1 1H19a2 2 0 0 1-4 0H9a2 2 0 0 1-4 0H3.4a1 1 0 0 1-1-1V13a1.5 1.5 0 0 1 1-1.4L5 11zm2.2-.5h9.6l-1-3a.5.5 0 0 0-.48-.35H8.68a.5.5 0 0 0-.48.35l-1 3z"/></svg></span>SGWheelz</div>
+    <div class="sub">Car Trading Management System</div>
+    <label>Email</label><input id="email" value="demo@sgwheelz.example"/>
+    <label>Password</label><input id="pass" type="password" value="demo1234"/>
+    <button class="btn" onclick="signIn()">Sign in</button>
+    <div class="hint">This is a live demo — just click <b>Sign in</b>.</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="shell">
+    <aside class="side">
+      <div class="lg"><span class="logo"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11l1.6.6A1.5 1.5 0 0 1 21.6 13v3.5a1 1 0 0 1-1 1H19a2 2 0 0 1-4 0H9a2 2 0 0 1-4 0H3.4a1 1 0 0 1-1-1V13a1.5 1.5 0 0 1 1-1.4L5 11z"/></svg></span>SGWheelz</div>
+      <nav class="nav">
+        <a data-v="dashboard" class="active" onclick="nav('dashboard')"><svg viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z"/></svg>Dashboard</a>
+        <a data-v="transactions" onclick="nav('transactions')"><svg viewBox="0 0 24 24"><path d="M4 5h16v3H4zM4 10h16v3H4zM4 15h10v3H4z"/></svg>Transactions</a>
+        <a data-v="dealers" onclick="nav('dealers')"><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zm0 2c-3.3 0-8 1.7-8 5v1h16v-1c0-3.3-4.7-5-8-5z"/></svg>Dealers</a>
+        <a data-v="buyers" onclick="nav('buyers')"><svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6z"/></svg>Buyers</a>
+        <a data-v="reports" onclick="nav('reports')"><svg viewBox="0 0 24 24"><path d="M4 20V10h4v10zm6 0V4h4v16zm6 0v-7h4v7z"/></svg>Reports</a>
+      </nav>
+      <div class="who"><b>Demo Owner</b>Owner<button class="logout" onclick="signOut()">Sign out</button></div>
+    </aside>
+
+    <main class="main">
+      <!-- DASHBOARD -->
+      <div id="v-dashboard">
+        <div class="top"><div><h1>Dashboard</h1><p class="pagesub" id="dashsub"></p></div></div>
+        <div class="kpis" id="kpis"></div>
+        <div class="panel"><div class="ph">Recent transactions</div><div style="overflow:auto"><table id="recentTbl"></table></div></div>
+      </div>
+
+      <!-- TRANSACTIONS -->
+      <div id="v-transactions" style="display:none">
+        <div class="top"><div><h1>Transactions</h1><p class="pagesub"><span id="txnCount"></span> records · click a commission to mark it paid</p></div><div class="spacer"></div><button class="b2" onclick="alert('In the full system this exports an Excel file.')">Excel</button><button class="bprimary" onclick="openNew()">+ New</button></div>
+        <div class="toolbar">
+          <input class="search" id="q" placeholder="Search car, plate, buyer, REC NO…" oninput="renderTxns()"/>
+          <select id="fstatus" onchange="renderTxns()"><option value="">All statuses</option><option>Completed</option><option>In Progress</option></select>
+          <select id="fpaid" onchange="renderTxns()"><option value="">Commission: all</option><option value="unpaid">Unpaid</option><option value="paid">Paid</option></select>
+        </div>
+        <div class="selbar" id="selbar"><b><span id="selcount">0</span> selected</b><div class="spacer"></div><button class="mini" onclick="bulkPaid(true)">Mark comm paid</button><button class="mini" onclick="bulkPaid(false)">Mark unpaid</button><button class="mini" onclick="clearSel()">Clear</button></div>
+        <div class="panel"><div style="overflow:auto"><table id="txnTbl"></table></div></div>
+      </div>
+
+      <!-- DEALERS -->
+      <div id="v-dealers" style="display:none">
+        <div class="top"><div><h1>Dealers</h1><p class="pagesub">Who you buy cars from</p></div></div>
+        <div class="panel"><div style="overflow:auto"><table id="dealerTbl"></table></div></div>
+      </div>
+      <!-- BUYERS -->
+      <div id="v-buyers" style="display:none">
+        <div class="top"><div><h1>Buyers</h1><p class="pagesub">Who you sell / export to — with totals</p></div></div>
+        <div class="panel"><div style="overflow:auto"><table id="buyerTbl"></table></div></div>
+      </div>
+      <!-- REPORTS -->
+      <div id="v-reports" style="display:none">
+        <div class="top"><div><h1>Reports</h1><p class="pagesub">Monthly summary — the same view as your pivot tables</p></div></div>
+        <div class="panel"><div class="ph">Monthly summary</div><div style="overflow:auto"><table id="reportTbl"></table></div></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- NEW MODAL -->
+<div class="modal" id="modal">
+  <div class="m">
+    <h3>New transaction</h3>
+    <div class="frow">
+      <div><label>Car</label><input id="m_car" placeholder="e.g. Toyota Vios"/></div>
+      <div><label>Car plate</label><input id="m_plate" placeholder="e.g. SGX1234A"/></div>
+      <div><label>Dealer (seller)</label><input id="m_dealer" placeholder="e.g. Alston"/></div>
+      <div><label>Buyer / exporter</label><input id="m_buyer" placeholder="e.g. Jasper"/></div>
+      <div><label>Sale amount</label><input id="m_sale" type="number" value="0" oninput="calcM()"/></div>
+      <div><label>Buy amount</label><input id="m_buy" type="number" value="0" oninput="calcM()"/></div>
+      <div><label>Tow fee</label><input id="m_tow" type="number" value="0" oninput="calcM()"/></div>
+      <div><label>Status</label><select id="m_status"><option>Completed</option><option>In Progress</option></select></div>
+    </div>
+    <div class="readout"><span>Balance (auto): <b id="m_bal">$0</b></span><span>Commission (auto): <b id="m_comm">$0</b></span></div>
+    <div class="mfoot"><button class="b2" onclick="closeModal()">Cancel</button><button class="bprimary" onclick="saveNew()">Create transaction</button></div>
+  </div>
+</div>
+
+<script>
+/* ---------- sample data (fake) ---------- */
+const dealersList=["Alston","Jasper","Sleek Motors","Darren","Kelvin","Dennise"];
+const buyersList=["Vitalis Africa","FHM Export","Mooroo Trading","BM Bilawal","Ibrahim","Nadir"];
+let SEQ=26089;
+function mk(rec,mo,car,plate,dealer,buyer,sale,buy,tow,paid,status){return{rec,mo,car,plate,dealer,buyer,sale,buy,tow,paid,status};}
+let DATA=[
+ mk(26089,'May','Toyota Vios','SGH2857G','Alston','Mooroo Trading',8800,8000,200,true,'Completed'),
+ mk(26086,'May','Mercedes E200','SND9468M','Jasper','FHM Export',23000,21000,300,true,'Completed'),
+ mk(26085,'May','Toyota Wish','SGH8174D','Sleek Motors','Vitalis Africa',11500,9000,250,false,'Completed'),
+ mk(26084,'May','VW Golf','SGK823B','Darren','FHM Export',14000,10000,0,false,'Completed'),
+ mk(26083,'May','Toyota Prius','SLC5192M','Kelvin','Mooroo Trading',18500,18000,150,false,'Completed'),
+ mk(26071,'Apr','Kia Carens','SLF9343C','Dennise','Nadir',6000,4000,0,true,'Completed'),
+ mk(26065,'Apr','Toyota Sienta','SLD2540G','Alston','Mooroo Trading',9500,8500,120,false,'Completed'),
+ mk(26060,'Apr','Toyota Altis','SGG9815L','Jasper','BM Bilawal',22000,19000,300,false,'In Progress'),
+ mk(26052,'Mar','Hyundai Elantra','SLC087Y','Kelvin','Ibrahim',14000,12000,0,true,'Completed'),
+ mk(26041,'Mar','Kia K3','SLC6591M','Darren','Nadir',17000,14000,200,false,'Completed'),
+ mk(26033,'Mar','Kia K2500','GBE9644H','Dennise','Ibrahim',11000,9000,150,false,'Completed'),
+ mk(26021,'Feb','Toyota Harrier','SKR10027','Sleek Motors','Mooroo Trading',15000,13000,0,false,'In Progress'),
+];
+const money=n=>'$'+(n||0).toLocaleString('en-US');
+const commOf=t=>Math.max(0,(t.sale-t.buy)-t.tow);
+let sel=new Set();
+
+/* ---------- auth ---------- */
+function signIn(){document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';nav('dashboard');}
+function signOut(){document.getElementById('app').style.display='none';document.getElementById('login').style.display='grid';sel.clear();}
+
+/* ---------- nav ---------- */
+function nav(v){
+  document.querySelectorAll('.nav a').forEach(a=>a.classList.toggle('active',a.dataset.v===v));
+  ['dashboard','transactions','dealers','buyers','reports'].forEach(x=>document.getElementById('v-'+x).style.display=x===v?'block':'none');
+  if(v==='dashboard')renderDash();
+  if(v==='transactions')renderTxns();
+  if(v==='dealers')renderDealers();
+  if(v==='buyers')renderBuyers();
+  if(v==='reports')renderReports();
+}
+
+/* ---------- dashboard ---------- */
+function renderDash(){
+  const sales=DATA.reduce((s,t)=>s+t.sale,0), buys=DATA.reduce((s,t)=>s+t.buy,0),
+        comm=DATA.reduce((s,t)=>s+commOf(t),0), tow=DATA.reduce((s,t)=>s+t.tow,0);
+  document.getElementById('dashsub').textContent=DATA.length+' cars tracked · sample data';
+  document.getElementById('kpis').innerHTML=[
+    ['Total Sales',money(sales)],['Total Purchases',money(buys)],['Commission',money(comm),'green'],['Cars',DATA.length]
+  ].map(k=>`<div class="kpi"><div class="l">${k[0]}</div><div class="v ${k[2]||''}">${k[1]}</div></div>`).join('');
+  const rows=DATA.slice(0,6).map(t=>`<tr><td class="rec">${t.rec}</td><td>${t.car}</td><td>${t.buyer}</td><td class="money">${money(t.sale)}</td><td class="money">${money(commOf(t))}</td><td><span class="pill ${t.status==='Completed'?'done':'prog'}">${t.status}</span></td></tr>`).join('');
+  document.getElementById('recentTbl').innerHTML=`<thead><tr><th>Rec No.</th><th>Car</th><th>Buyer</th><th>Sale</th><th>Comm.</th><th>Status</th></tr></thead><tbody>${rows}</tbody>`;
+}
+
+/* ---------- transactions ---------- */
+function renderTxns(){
+  const q=(document.getElementById('q').value||'').toLowerCase();
+  const fs=document.getElementById('fstatus').value, fp=document.getElementById('fpaid').value;
+  const rows=DATA.filter(t=>{
+    const hay=(t.rec+' '+t.car+' '+t.plate+' '+t.buyer+' '+t.dealer).toLowerCase();
+    if(q&&!hay.includes(q))return false;
+    if(fs&&t.status!==fs)return false;
+    if(fp==='paid'&&!t.paid)return false;
+    if(fp==='unpaid'&&t.paid)return false;
+    return true;
+  });
+  document.getElementById('txnCount').textContent=DATA.length;
+  const ck='<svg class="ck" viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>';
+  const body=rows.map(t=>`<tr>
+    <td><input type="checkbox" style="width:auto" ${sel.has(t.rec)?'checked':''} onchange="toggleSel(${t.rec})"></td>
+    <td class="rec">${t.rec}</td><td>${t.mo}</td><td>${t.car}</td><td>${t.plate}</td><td>${t.dealer}</td><td>${t.buyer}</td>
+    <td class="money">${money(t.sale)}</td><td class="money">${money(t.buy)}</td><td class="money">${money(t.sale-t.buy)}</td>
+    <td class="comm money ${t.paid?'paid':''}" title="${t.paid?'Commission paid — click to unmark':'Not paid — click to mark paid'}" onclick="togglePaid(${t.rec})">${t.paid?ck:''}${money(commOf(t))}</td>
+    <td><span class="pill ${t.status==='Completed'?'done':'prog'}">${t.status}</span></td>
+  </tr>`).join('');
+  document.getElementById('txnTbl').innerHTML=`<thead><tr><th></th><th>Rec No.</th><th>Month</th><th>Car</th><th>Plate</th><th>Dealer</th><th>Buyer</th><th>Sale</th><th>Buy</th><th>Balance</th><th>Comm.</th><th>Status</th></tr></thead><tbody>${body||'<tr><td colspan="12" style="padding:26px;text-align:center;color:#94a3b8">No matching records</td></tr>'}</tbody>`;
+  updateSelbar();
+}
+function togglePaid(rec){const t=DATA.find(x=>x.rec===rec);t.paid=!t.paid;renderTxns();}
+function toggleSel(rec){sel.has(rec)?sel.delete(rec):sel.add(rec);updateSelbar();}
+function clearSel(){sel.clear();renderTxns();}
+function bulkPaid(v){sel.forEach(r=>{const t=DATA.find(x=>x.rec===r);if(t)t.paid=v;});sel.clear();renderTxns();}
+function updateSelbar(){const b=document.getElementById('selbar');b.style.display=sel.size?'flex':'none';document.getElementById('selcount').textContent=sel.size;}
+
+/* ---------- new modal ---------- */
+function openNew(){document.getElementById('modal').style.display='grid';['car','plate','dealer','buyer'].forEach(f=>document.getElementById('m_'+f).value='');['sale','buy','tow'].forEach(f=>document.getElementById('m_'+f).value=0);calcM();}
+function closeModal(){document.getElementById('modal').style.display='none';}
+function calcM(){const s=+document.getElementById('m_sale').value||0,b=+document.getElementById('m_buy').value||0,to=+document.getElementById('m_tow').value||0;document.getElementById('m_bal').textContent=money(s-b);document.getElementById('m_comm').textContent=money(Math.max(0,(s-b)-to));}
+function saveNew(){
+  const g=id=>document.getElementById('m_'+id).value;
+  const s=+g('sale')||0,b=+g('buy')||0,to=+g('tow')||0;
+  DATA.unshift(mk(++SEQ,'Jun',g('car')||'New Car',g('plate')||'—',g('dealer')||'—',g('buyer')||'—',s,b,to,false,g('status')));
+  closeModal();nav('transactions');
+}
+
+/* ---------- dealers / buyers ---------- */
+function renderDealers(){
+  const map={};DATA.forEach(t=>{map[t.dealer]=(map[t.dealer]||0)+1;});
+  document.getElementById('dealerTbl').innerHTML=`<thead><tr><th>Dealer</th><th>Cars bought</th></tr></thead><tbody>${Object.entries(map).map(([d,c])=>`<tr><td>${d}</td><td>${c}</td></tr>`).join('')}</tbody>`;
+}
+function renderBuyers(){
+  const map={};DATA.forEach(t=>{(map[t.buyer]=map[t.buyer]||{c:0,v:0}).c++;map[t.buyer].v+=t.sale;});
+  document.getElementById('buyerTbl').innerHTML=`<thead><tr><th>Buyer / Exporter</th><th>Cars</th><th>Total sales</th></tr></thead><tbody>${Object.entries(map).sort((a,b)=>b[1].v-a[1].v).map(([n,o])=>`<tr><td>${n}</td><td>${o.c}</td><td class="money">${money(o.v)}</td></tr>`).join('')}</tbody>`;
+}
+/* ---------- reports ---------- */
+function renderReports(){
+  const order=['Feb','Mar','Apr','May','Jun'];const map={};
+  DATA.forEach(t=>{const m=map[t.mo]=map[t.mo]||{cars:0,sale:0,buy:0,comm:0};m.cars++;m.sale+=t.sale;m.buy+=t.buy;m.comm+=commOf(t);});
+  const rows=order.filter(m=>map[m]).map(m=>{const o=map[m];return `<tr><td><b>${m}</b></td><td>${o.cars}</td><td class="money">${money(o.sale)}</td><td class="money">${money(o.buy)}</td><td class="money">${money(o.comm)}</td></tr>`;}).join('');
+  const tot=DATA.reduce((a,t)=>{a.cars++;a.sale+=t.sale;a.buy+=t.buy;a.comm+=commOf(t);return a;},{cars:0,sale:0,buy:0,comm:0});
+  document.getElementById('reportTbl').innerHTML=`<thead><tr><th>Month</th><th>Cars</th><th>Sales</th><th>Purchases</th><th>Commission</th></tr></thead><tbody>${rows}<tr style="background:#f8fafc;font-weight:800"><td>Total</td><td>${tot.cars}</td><td class="money">${money(tot.sale)}</td><td class="money">${money(tot.buy)}</td><td class="money">${money(tot.comm)}</td></tr></tbody>`;
+}
+</script>
+</body>
+</html>
